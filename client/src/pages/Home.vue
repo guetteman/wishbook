@@ -20,7 +20,7 @@
                 </div>
             </card>
 
-            <div class="w-full mt-10">
+            <div v-if="$auth.isAuthenticated" class="w-full mt-10">
                 <card class="overflow-hidden">
                     <div class="flex justify-between items-center px-4 py-2 bg-gray-200">
                         <h2 class="text-gray-600 text-2xl">Your waitlist</h2>

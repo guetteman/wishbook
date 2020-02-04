@@ -5,8 +5,8 @@
             <div class="flex justify-between w-full max-w-4xl mx-auto p-4">
                 <router-link to="/" class="text-gray-600 font-bold"><span class="text-indigo-500">Wish</span>Book</router-link>
                 <div v-if="!$auth.loading">
-                    <button v-if="!$auth.isAuthenticated" @click="login" class="text-gray-600">Login</button>
                     <button v-if="$auth.isAuthenticated" class="text-gray-600" @click="logout">Logout</button>
+                    <button v-if="!$auth.isAuthenticated" @click="login" class="text-gray-600">Login</button>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@ export default {
 
         logout () {
             this.$auth.logout({
-                returnTo: this.$router.push('/')
+                returnTo: window.location.origin
             });
         }
     }
