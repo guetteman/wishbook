@@ -6,7 +6,7 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-plugin-tracing
 package:
-  individually: true
+  individually: false
 
 provider:
   name: aws

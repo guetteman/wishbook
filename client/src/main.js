@@ -8,13 +8,13 @@ import routes from './routes';
 import App from './App.vue';
 import Card from './components/Card';
 
-import { domain, clientId } from '../auth-config.json';
+import { authConfig } from '../config';
 
 import { Auth0Plugin } from './auth';
 
 Vue.use(Auth0Plugin, {
-    domain,
-    clientId,
+    domain: authConfig.domain,
+    clientId: authConfig.clientId,
     onRedirectCallback: appState => {
         router.push(
             appState && appState.targetUrl

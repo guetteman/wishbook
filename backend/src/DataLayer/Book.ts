@@ -7,7 +7,7 @@ import * as uuid from 'uuid';
 import {UpdateBookRequest} from "../requests/UpdateBookRequest";
 
 const XAWS = AWSXRAY.captureAWS(AWS);
-const TABLE_NAME = process.env.TODOS_TABLE;
+const TABLE_NAME = process.env.BOOKS_TABLE;
 const BUCKET = process.env.S3_BUCKET;
 
 const docClient = new XAWS.DynamoDB.DocumentClient;

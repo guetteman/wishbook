@@ -10,6 +10,7 @@ const logger = createLogger('createBook');
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
     const newBookData: CreateBookRequest = JSON.parse(event.body);
+    logger.info(newBookData);
     const newBook = await createBook(newBookData, event);
 
     if (!newBook) {
@@ -24,7 +25,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         }
     }
 
-    logger.info('New to do:', newBook);
+    logger.info(newBook);
 
     return {
         statusCode: 200,
