@@ -26,22 +26,27 @@ export async function getBooks(event:APIGatewayProxyEvent) {
 }
 
 export async function createBook(data: CreateBookRequest, event:APIGatewayProxyEvent) {
+    const bookId = uuid.v4();
+
     const book = {
         userId: getUserId(event),
-        bookId: uuid.v4(),
+        bookId: bookId,
         createdAt: (new Date()).toISOString(),
         title: data.title,
         subTitle: data.subTitle,
         author: data.author,
         description: data.description,
+        coverImgUrl: getUploadUrl(bookId).split('?')[0]
     };
+
+    const signedUrl = getUploadUrl(book.bookId);
 
     await docClient.put({
         TableName: TABLE_NAME,
         Item: book
     }).promise();
 
-    return book
+    return { book, signedUrl }
 }
 
 export async function updateBook(data:UpdateBookRequest, bookId:string, event:APIGatewayProxyEvent) {
@@ -79,7 +84,7 @@ export async function deleteBook(bookId:string, event:APIGatewayProxyEvent) {
 
 export function getUploadUrl(bookId: string) {
     const s3 = new XAWS.S3({ signatureVersion: 'v4'});
-    const urlExpiration = process.env.SIGNED_URL_EXPIRATION;
+    const urlExpiration = parseInt(process.env.SIGNED_URL_EXPIRATION);
 
     return s3.getSignedUrl('putObject', {
         Bucket: BUCKET,
@@ -95,7 +100,7 @@ export async function updateUrl(bookId: string, event:APIGatewayProxyEvent, url:
             bookId: bookId,
             userId: getUserId(event)
         },
-        UpdateExpression: 'set attachmentUrl = :uploadUrl',
+        UpdateExpression: 'set coverImgUrl = :uploadUrl',
         ExpressionAttributeValues: {
             ':uploadUrl': url
         },

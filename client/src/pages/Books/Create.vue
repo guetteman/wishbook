@@ -6,7 +6,8 @@
             </div>
             <div class="p-4">
                 <div class="flex flex-wrap justify-center sm:justify-between">
-                    <BookCover />
+<!--                    <BookCover />-->
+                    <UploadCover v-model="bookCoverImg"/>
 
                     <div class="w-full sm:w-9/12">
                         <label class="block">
@@ -40,16 +41,19 @@
 
 <script>
 import BookCover from '../../components/BookCover';
-import { createBook } from "../../api/booksApi";
+import UploadCover from "../../components/UploadCover";
+import { createBook, uploadCoverImg } from "../../api/booksApi";
 
 export default {
     components: {
-        BookCover
+        BookCover,
+        UploadCover
     },
 
     data () {
         return {
-            newBook: {}
+            newBook: {},
+            bookCoverImg: null
         }
     },
 
@@ -58,7 +62,9 @@ export default {
             try {
                 const authTokenClaims = await this.$auth.getIdTokenClaims();
                 const response = await createBook(authTokenClaims.__raw, this.newBook);
-                console.log(response);
+                await uploadCoverImg(response.signedUrl, this.bookCoverImg);
+
+                await this.$router.push('/');
             } catch (e){
                 console.log(e)
             }
