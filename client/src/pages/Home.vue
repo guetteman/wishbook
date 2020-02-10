@@ -10,12 +10,12 @@
         <div class="max-w-4xl mx-auto px-4 lg:px-0">
             <card class="-mt-20 p-4">
                 <label class="block">
-                    <input class="form-input block w-full" placeholder="Search for a new book...">
+                    <input v-model="query" @input="searchForOpenBooks()" class="form-input block w-full" placeholder="Search for a new book...">
                 </label>
 
                 <div class="px-4 overflow-x-auto">
                     <div class="flex mt-4 -ml-12">
-                        <BookCover v-for="i in 10" :key="i" class="pl-8"/>
+                        <AddCover v-for="book in openBooks" :key="book.cover_edition_key" :book="book" class="pl-8"/>
                     </div>
                 </div>
             </card>
@@ -34,15 +34,37 @@
 </template>
 
 <script>
-import BookCover from '../components/BookCover';
 import Waitlist from "../components/Waitlist";
+import {search} from "../api/openBookApi";
+import AddCover from "../components/AddCover";
 
 export default {
     components: {
-        BookCover,
+        AddCover,
+        AddCover,
         Waitlist
     },
 
+    data () {
+        return {
+            query: '',
+            openBooks: [],
+            timer: null,
+        };
+    },
 
+    methods: {
+        async searchForOpenBooks() {
+            if (this.timer) clearTimeout(this.timer);
+
+            this.timer = setTimeout(async () => {
+
+                this.openBooks = await search(this.query);
+                console.log(this.openBooks);
+
+            }, 500);
+        }
+
+    }
 }
 </script>
