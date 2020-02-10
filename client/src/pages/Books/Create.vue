@@ -16,7 +16,7 @@
                         </label>
                         <label class="block mt-4">
                             <span class="text-gray-700">Sub-title</span>
-                            <input class="form-input mt-1 block w-full" placeholder="Just a new book that I want to read">
+                            <input v-model="newBook.subTitle" class="form-input mt-1 block w-full" placeholder="Just a new book that I want to read">
                         </label>
                     </div>
                 </div>

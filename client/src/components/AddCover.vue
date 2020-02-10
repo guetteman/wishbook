@@ -14,7 +14,7 @@
 </template>
 
 <script>
-    import {createBook, uploadCoverImg} from "../api/booksApi";
+    import {createBook} from "../api/booksApi";
 
     export default {
     props: {
@@ -47,7 +47,7 @@
             try {
                 const authTokenClaims = await this.$auth.getIdTokenClaims();
                 const response = await createBook(authTokenClaims.__raw, newBook);
-                await this.$router.push('/');
+                await this.$router.go();
             } catch (e){
                 console.log(e)
             }
