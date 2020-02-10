@@ -25,6 +25,15 @@ export async function getBooks(idToken) {
     return response.data.items;
 }
 
+export async function deleteBook(idToken, bookId) {
+    return  await axios.delete(`${apiEndpoint}/books/${bookId}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`
+        },
+    });
+}
+
 export async function uploadCoverImg(uploadUrl, file) {
     return await axios.put(uploadUrl, file);
 }
