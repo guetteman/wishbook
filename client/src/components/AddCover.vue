@@ -38,9 +38,9 @@
         async create () {
             const newBook = {
                 title: this.book.title_suggest,
-                subTitle: '',
-                description: '',
-                author: this.book.author_name,
+                subTitle: this.book.title_suggest,
+                description: this.book.title_suggest,
+                author: this.book.author_name[0],
                 coverImgUrl: this.getCoverUrl()
             };
 

@@ -7,4 +7,5 @@ export interface CreateBookRequest {
     subTitle: string
     author: string
     description: string
+    coverImgUrl: string
 }

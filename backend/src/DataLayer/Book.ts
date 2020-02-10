@@ -36,7 +36,7 @@ export async function createBook(data: CreateBookRequest, event:APIGatewayProxyE
         subTitle: data.subTitle,
         author: data.author,
         description: data.description,
-        coverImgUrl: getUploadUrl(bookId).split('?')[0]
+        coverImgUrl: data.coverImgUrl || getUploadUrl(bookId).split('?')[0]
     };
 
     const signedUrl = getUploadUrl(book.bookId);

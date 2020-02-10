@@ -41,7 +41,6 @@ import AddCover from "../components/AddCover";
 export default {
     components: {
         AddCover,
-        AddCover,
         Waitlist
     },
 
